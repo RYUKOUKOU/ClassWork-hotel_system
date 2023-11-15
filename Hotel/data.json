@@ -1,7 +1,65 @@
-{
-  "roomid": "2",
-  "is_active": true,
-  "name": "John Doe",
-  "phone": "123-456-7890",
-  "timestamp": "2023-11-15 15:53:42.562468"
-}
+[
+  {
+    "roomid": 1,
+    "state": "True",
+    "name": "RYU11",
+    "phone": "0809775",
+    "timestamp": "2023-11-15 18:17:01.501492"
+  },
+  {
+    "roomid": 2,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 3,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 4,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 5,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 6,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 7,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 8,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  },
+  {
+    "roomid": 9,
+    "state": "False",
+    "name": "",
+    "phone": "",
+    "timestamp": ""
+  }
+]
