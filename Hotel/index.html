@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホテル</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="left-section">
+        <h1>部屋番号</h1>
+            <form class="button">
+                <button class="room-button" onclick="buttonClick(1)">101</button>
+                <button class="room-button" onclick="buttonClick(2)">102</button>
+                <button class="room-button" onclick="buttonClick(3)">103</button>
+                <button class="room-button" onclick="buttonClick(4)">201</button>
+                <button class="room-button" onclick="buttonClick(5)">202</button>
+                <button class="room-button" onclick="buttonClick(6)">203</button>
+                <button class="room-button" onclick="buttonClick(7)">301</button>
+                <button class="room-button" onclick="buttonClick(8)">302</button>
+                <button class="room-button" onclick="buttonClick(9)">303</button>
+            </form>
+
+        <div class="separator">
+            
+            <div class="function-left">
+                <h1 class="function-h1"> 機能インターフェース</h1>
+                <form class="button1">
+                    <button class="function-button" onclick="buttonClick(1)">チェックイン</button><br>
+                    <button class="function-button" onclick="buttonClick(2)">掃除</button><br>
+                    <button class="function-button" onclick="buttonClick(3)">チェックアウト</button>
+                
+            </div>
+                
+            <div class="function-right"></div>
+        </div>
+        <h1></h1>
+    </div>
+<div class="right-section">
+    <h1>ルームの画面</h1>
+    <div class="separator1">
+        <form >
+            <td>
+                <div class="room101" >101</div>
+                <div class="room101" >102</div>
+                <div class="room101" >103</div>
+            </td>
+        </form>
+
+    
+        <form>
+            <td><div class="room101" >201</div>
+            <div class="room101" >202</div>
+            <div class="room101" >203</div></td>
+
+        </form>
+    
+        
+        
+    </div>
+    
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
