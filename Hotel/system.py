@@ -35,3 +35,4 @@ def read_info(fjh):
                 dh = room['phone']
                 sj = room['timestamp']
                 return zy , xm , dh ,sj
+    return None
