@@ -1,6 +1,5 @@
 
 def check(roomind, state, name, phone, timestamp):
-    
     pass
 
 
