@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    {% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
+</head>
+<body>
+
+    <header>
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <main>
+        <div class="center-box">
+            <h2>房间2</h2>
+            {% block main_box %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 房间</p>
+    </footer>
+
+</body>
+</html>
