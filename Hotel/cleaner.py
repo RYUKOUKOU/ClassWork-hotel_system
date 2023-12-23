@@ -12,5 +12,4 @@ def yes(response):
     elif response.lower() == 'no':
         return 'ゆっくり休んでくださいます。'
     else:
-        return 'ひとがいないですか？'    
-    
+        return 'ひとがいないですか？' 
