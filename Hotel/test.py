@@ -1,16 +1,17 @@
-# app.py
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
-@app.route('/')
+socketio = SocketIO(app)
 
-@app.route('/index.html')
+@app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/room1.html')
-def access():
-    return render_template('room1.html')
+@socketio.on('button_click')
+def handle_button_click(data):
+    print(data)
+    socketio.emit('update_content', data)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+    socketio.run(app)

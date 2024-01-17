@@ -39,6 +39,21 @@ main {
     justify-content: center;
     margin-left: 200px;
 }
+.center-box-button {
+    text-align: center;
+    padding: 20px; /* Adjust as needed */
+    width: 800px;
+    height: 100px; /* Ensure the desired height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 200px;
+    font-size: 50px;
+}
+.center-box-button button {
+    font-size: 25px;
+    margin-right: 50px;
+}
 
 
 footer {
