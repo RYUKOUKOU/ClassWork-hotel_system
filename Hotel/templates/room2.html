@@ -19,7 +19,7 @@
                 <h1>XXXホテル</h1>
             </div>
             <div class="center-box-mes">
-                <p id="message">{{ message }}</p>
+                <h2 id="display">{{ message }}</h2>
             </div>
             <form name="form01" action="/" method="post" class="center-box-button">
                 <table>
@@ -33,7 +33,6 @@
             </form>
         </div>
 
-    <h1 id="display">Display Page</h1>
 
     <script>
         var socket = io.connect('http://' + document.domain + ':' + location.port);

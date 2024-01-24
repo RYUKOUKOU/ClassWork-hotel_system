@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホテル</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
 </head>
 <body>
     <div class="left-section">
@@ -122,11 +123,15 @@
             if (confirmation) {
                 // ユーザーが「OK」ボタンをクリックした場合
                 alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+                var message = 'Display updated at ' + new Date().toLocaleTimeString();
+                socket.emit('update_message', message);
             } else {
                 // ユーザーが「キャンセル」ボタンをクリックした場合
                 alert('清掃リクエストをキャンセルしました');
             }
         }
+
       </script>
 </body>
 </html>
