@@ -1,37 +1,132 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
-
+    <title>ホテル</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-    </header>
-    <main>
-        <form name="form01" action = "/cleaner" method = "post">
-            <table>
-              <tr>
-                <td colspan="2">
-                    <button type="submit" name="room_id" value="1">1</button>
-                    <button type="submit" name="room_id" value="2">2</button>
-                    
-                <hr>
-              </tr>
-            </table>
-        </form>
-        <button id="updateButton">Update Display</button>
-    </main>
-    <script>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+    <div class="left-section">
+        <h1>部屋番号</h1>
+            
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(101)">101</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(102)">102</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(103)">103</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(201)">201</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(202)">202</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(203)">203</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(301)">301</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(302)">302</button>
+                <button class="room-btn" id="roomButton" onclick="showRoomButtons(303)">303</button>
+            
 
-        document.getElementById('updateButton').onclick = function() {
-            var message = 'Display updated at ' + new Date().toLocaleTimeString();
-            socket.emit('update_message', message);
-        };
-    </script>
+        <div class="separator">
+            
+            <div class="function-left">
+                <h1 class="function-h1"> 機能インターフェース</h1>
+                <div class="room-btns" id="roomButtons">
+                    <button onclick="checkIn()">チェックイン</button><br>
+                    <button onclick="checkOut()">チェックアウト</button><br>
+                    <button onclick="cleanRoom()">清掃</button>
+                </div>
+                
+            </div>
+                
+            <div class="function-right">
+                <div class="customer-info" id="customerInfo">
+                    <label for="customerName">お客様のお名前:</label>
+                    <input type="text" id="customerName">
+                
+                    <label for="phoneNumber">電話番号:</label>
+                    <input type="tel" id="phoneNumber">
+                
+                    <label for="checkInTime">チェックイン時間:</label>
+                    <input type="datetime-local" id="checkInTime">
+                
+                    <button onclick="submitCheckIn()">提出</button>
+                  </div>
+                
+
+            </div>
+        </div>
+        <h1></h1>
+    </div>
+    <script>
+        // 現在選択されている部屋番号
+        let selectedRoom;
+      
+        // 部屋の機能ボタンを表示
+        function showRoomButtons(roomNumber) {
+          // 前回選択された部屋のボタンを非表示にする
+          hideRoomButtons();
+      
+          // 現在選択されている部屋番号を設定
+          selectedRoom = roomNumber;
+      
+          // ボタンを表示する部屋の要素を取得
+          const roomElement = document.getElementById('roomButtons');
+      
+          // ボタンを表示
+          roomElement.style.display = 'block';
+        }
+      
+        // 部屋の機能ボタンを非表示にする
+        function hideRoomButtons() {
+          // 前回選択された部屋のボタンを非表示にする
+          const lastSelectedRoom = document.getElementById('roomButtons');
+          if (lastSelectedRoom) {
+            lastSelectedRoom.style.display = 'none';
+          }
+      
+          // 顧客情報入力画面を非表示にする
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'none';
+        }
+      
+        // 顧客情報入力画面を表示
+        function checkIn() {
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'block';
+        }
+      
+        // チェックイン操作を提出
+        function submitCheckIn() {
+          // 顧客情報を取得
+          const customerName = document.getElementById('customerName').value;
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          const checkInTime = document.getElementById('checkInTime').value;
+      
+          // ここにチェックイン操作を提出するためのロジックを追加できます。例えば、情報をサーバーに送信するなど
+      
+          // 成功のアラートを表示（例）
+          alert(`チェックイン成功！\nお名前: ${customerName}\n電話番号: ${phoneNumber}\nチェックイン時間: ${checkInTime}`);
+      
+          // 顧客情報入力画面を非表示にする
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'none';
+        }
+      
+        // チェックアウト操作
+        function checkOut() {
+          // ここにチェックアウト操作のロジックを追加できます
+          // 成功のアラートを表示（例）
+          alert(`チェックアウト成功、部屋番号 ${selectedRoom}`);
+        }
+      
+        // 清掃操作
+        function cleanRoom() {
+            // confirm関数を使用して確認ダイアログを表示
+            const confirmation = confirm(`清掃リクエストを送信しますか？ 部屋番号 ${selectedRoom}?`);
+
+            if (confirmation) {
+                // ユーザーが「OK」ボタンをクリックした場合
+                alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
+            } else {
+                // ユーザーが「キャンセル」ボタンをクリックした場合
+                alert('清掃リクエストをキャンセルしました');
+            }
+        }
+      </script>
 </body>
 </html>
