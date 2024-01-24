@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
 </head>
 <body>
     <header>
@@ -21,21 +23,15 @@
               </tr>
             </table>
         </form>
-        <button onclick="sendButtonClick()">点击我</button>
+        <button id="updateButton">Update Display</button>
     </main>
     <script>
-        const socket = io.connect('/');
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
 
-        function sendButtonClick() {
-            // 发送按钮点击事件到服务器
-            socket.emit('cleaner', { message: 'Button clicked!' });
-        }
-
-        // 接收服务器发送的更新内容事件
-        socket.on('update_cleaner', function(data) {
-            // 更新页面b内容
-            document.getElementById('content').innerText = data.message;
-        });
+        document.getElementById('updateButton').onclick = function() {
+            var message = 'Display updated at ' + new Date().toLocaleTimeString();
+            socket.emit('update_message', message);
+        };
     </script>
 </body>
 </html>

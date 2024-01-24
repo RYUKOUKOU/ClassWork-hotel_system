@@ -18,10 +18,13 @@ def room1():
 def room2():
     return render_template('room2.html', message="よこそう")
 
-@socketio.on('cleaner')
-def handle_button_click(data):
-    print(data)
-    socketio.emit('update_cleaner', data)
+@main.route('/display')
+def home1():
+    return render_template('display.html')
+@socketio.on('update_message')
+def handle_message(message):
+    # 处理从按钮点击事件发送的消息
+    socketio.emit('display_message', message)
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)
