@@ -14,13 +14,37 @@
 
     <main>
         <div class="center-box">
-          <div>
-            <h1>よこそう</h1>
-          </div>
-          <div class="center-box-mes">
-            <h2>ひとがいないですか？</h2>
-          </div>
-      		</div>
+            <div>
+                <h1>XXXホテル</h1>
+            </div>
+            <div class="center-box-mes">
+                <p id="message">{{ message }}</p>
+            </div>
+            <form name="form01" action="/" method="post" class="center-box-button">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit" name="choice" value="Y">はい</button>
+                            <button type="submit" name="choice" value="N">いいえ</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <script>
+            const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            function sendButtonClick() {
+                // 发送按钮点击事件到服务器
+                socket.emit('button_click', { message: 'Button clicked!' });
+            }
+
+            // 接收服务器发送的更新内容事件
+            socket.on('update_cleaner', function(data) {
+                // 更新页面内容
+                document.getElementById('message').innerText = data.message;
+            });
+        </script>
     </main>
 
     <footer>

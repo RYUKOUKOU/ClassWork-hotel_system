@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
+</head>
+<body>
+    <header>
+    </header>
+    <main>
+        <form name="form01" action = "/cleaner" method = "post">
+            <table>
+              <tr>
+                <td colspan="2">
+                    <button type="submit" name="room_id" value="1">1</button>
+                    <button type="submit" name="room_id" value="2">2</button>
+                    
+                <hr>
+              </tr>
+            </table>
+        </form>
+        <button onclick="sendButtonClick()">点击我</button>
+    </main>
+    <script>
+        const socket = io.connect('/');
+
+        function sendButtonClick() {
+            // 发送按钮点击事件到服务器
+            socket.emit('cleaner', { message: 'Button clicked!' });
+        }
+
+        // 接收服务器发送的更新内容事件
+        socket.on('update_cleaner', function(data) {
+            // 更新页面b内容
+            document.getElementById('content').innerText = data.message;
+        });
+    </script>
+</body>
+</html>
