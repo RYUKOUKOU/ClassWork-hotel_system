@@ -8,10 +8,14 @@ socketio = SocketIO(app)
 def index():
     return render_template('index.html')
 
-@socketio.on('button_click')
-def handle_button_click(data):
-    print(data)
-    socketio.emit('update_content', data)
+@app.route('/display')
+def display():
+    return render_template('display.html')
+
+@socketio.on('update_message')
+def handle_message(message):
+    # 处理从按钮点击事件发送的消息
+    socketio.emit('display_message', message)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, debug=True)
