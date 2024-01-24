@@ -15,7 +15,7 @@
 {% block js %}
     <script>
         var socket = io.connect('http://' + document.domain + ':' + location.port);
-        socket.on('display_message', function(message) {
+        socket.on('room101', function(message) {
             document.getElementById('display').innerHTML = message;
         });
     </script>

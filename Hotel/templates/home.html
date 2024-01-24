@@ -124,7 +124,7 @@
                 // ユーザーが「OK」ボタンをクリックした場合
                 alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
                 var socket = io.connect('http://' + document.domain + ':' + location.port);
-                var message = 'Display updated at ' + new Date().toLocaleTimeString();
+                var message = selectedRoom;
                 socket.emit('update_message', message);
             } else {
                 // ユーザーが「キャンセル」ボタンをクリックした場合
