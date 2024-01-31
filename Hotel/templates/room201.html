@@ -18,7 +18,7 @@
     var notificationSound = document.getElementById('notificationSound');
     var countdownInterval;
 
-    socket.on('room101', function (message) {
+    socket.on('room201', function (message) {
         document.getElementById('display').innerHTML = message;
 
         notificationSound.play();
