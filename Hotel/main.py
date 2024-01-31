@@ -49,6 +49,11 @@ def handle_message(id):
 @socketio.on('return_message')
 def return_message(id):
     socketio.emit('rehome', id)
+
+@socketio.on('roominfo')
+def return_message(id):
+    a,b,c,d = read_info(id)
+    socketio.emit('reroominfo', (a,b,c,d))
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)

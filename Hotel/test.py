@@ -1,21 +1,25 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO
+socket.on('rehome', function (id) {
+          let matches = id.match(/(\d+)([A-Za-z]+)/);
+          let remsg, roomid;  // 在 if 块外部声明变量
 
-app = Flask(__name__)
-socketio = SocketIO(app)
+          // 获取id为remsg的元素
+          let remsgElement = document.getElementById('remsg');
+          let remsgContent = remsgElement.innerText || remsgElement.textContent;
+          console.log(remsgElement);
+          if (matches) {
+              // 匹配到了，输出结果
+              roomid = matches[1];
+              remsg = matches[2];
+          } else {
+              // 没有匹配到
+              console.log("未找到匹配的数字和字母");
+          }
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+          if (remsg == "Y") {
+            remsgContent += roomid + "室の客様は掃除OK<br>";
+          } else {
+            remsgContent += roomid + "室の客様は掃除NG";
+          }
 
-@app.route('/display')
-def display():
-    return render_template('display.html')
-
-@socketio.on('update_message')
-def handle_message(message):
-    # 处理从按钮点击事件发送的消息
-    socketio.emit('display_message', message)
-
-if __name__ == '__main__':
-    socketio.run(app, debug=True)
+          remsgElement.innerHTML = remsgContent;
+      });

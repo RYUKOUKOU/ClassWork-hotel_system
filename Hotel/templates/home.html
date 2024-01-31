@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホテル</title>
-    <link rel="stylesheet" href="test.css">
-    <!--<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
 </head>
 <body>
     <div class="left-section">
@@ -45,27 +44,27 @@
                     <label for="phoneNumber">電話番号:</label><br>
                     <input type="tel" id="phoneNumber"><br>
                 
-                    <label for="checkInTime">チェックイン時間:</label><br>
+                    <label for="checkInTime">チェックアウト予定時間:</label><br>
                     <input type="datetime-local" id="checkInTime"><br>
                 
                     <button onclick="submitCheckIn()">提出</button>
                   </div>
+
+            
                 
 
             </div>
             <div class="feadback">
 
               <h1 class="feadback-title"> message </h1>
-                <p class="feadback-message">这里是返回信息1</p><br>
-                <p class="feadback-message">这里是返回信息1</p><br>
-                <p class="feadback-message">这里是返回信息1</p><br>
-                <p class="feadback-message">这里是返回信息1</p>
+                <p class="feadback-message" id="remsg"></p>
 
             </div>
         </div>
         <h1></h1>
     </div>
     <script>
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
         // 現在選択されている部屋番号
         let selectedRoom;
       
@@ -82,7 +81,13 @@
       
           // ボタンを表示
           roomElement.style.display = 'block';
+
+          socket.emit('roominfo', selectedRoom);
         }
+        //显示房间信息
+        socket.on('reroominfo', function (zy , xm , dh ,sj){
+          
+        })
       
         // 部屋の機能ボタンを非表示にする
         function hideRoomButtons() {
@@ -139,7 +144,6 @@
             if (confirmation) {
                 // ユーザーが「OK」ボタンをクリックした場合
                 alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
-                var socket = io.connect('http://' + document.domain + ':' + location.port);
                 var message = selectedRoom;
                 socket.emit('update_message', message);
             } else {
@@ -152,6 +156,34 @@
           const feedbackMessage = document.querySelector('.feedback-message p');
           feedbackMessage.textContent = 'チェックインが完了しました。';
         }
+
+        //接受返回信息
+        socket.on('rehome', function (id) {
+          let matches = id.match(/(\d+)([A-Za-z]+)/);
+          let remsg, roomid;
+          let remsgElement = document.getElementById('remsg');
+          if (matches) {
+              roomid = matches[1];
+              remsg = matches[2];
+          } else {
+              console.log("未找到匹配的数字和字母");
+          }
+          let remsgContent; 
+          let currentTime = new Date();
+          let timestamp = currentTime.toLocaleTimeString();
+          if (remsg == "Y") {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除OK';
+          } else {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除NG';
+          }
+          let newParagraph = document.createElement('p');
+          newParagraph.className = 'feadback-message';
+          newParagraph.textContent = remsgContent;
+          remsgElement.appendChild(newParagraph);
+          remsgElement.appendChild(document.createElement('br'));
+      });
+
+
 
       </script>
 </body>
