@@ -6,6 +6,10 @@
     <title>部屋102</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+    <audio id="notificationSound" preload="auto">
+        <source src="{{ url_for('static', filename='notification.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 </head>
 <body>
 
@@ -21,6 +25,9 @@
             <div class="center-box-mes">
                 <h2 id="display">{{ message }}</h2>
             </div>
+            <div class="center-box-progress">
+                <progress id="countdown" value="100" max="100"></progress>
+            </div>
             <form name="form01" action="/" method="post" class="center-box-button">
                 <table>
                     <tr>
@@ -34,13 +41,32 @@
         </div>
 
 
-    <script>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        <script>
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            var notificationSound = document.getElementById('notificationSound');
+            socket.on('room102', function (message) {
+                document.getElementById('display').innerHTML = message;
 
-        socket.on('room102', function(message) {
-            document.getElementById('display').innerHTML = message;
-        });
-    </script>
+                notificationSound.play();
+        
+                // 设置一个30秒的定时器（根据需要进行调整）
+                var countdownValue = 10;
+                var countdownElement = document.getElementById('countdown');
+                countdownElement.value = 100;
+        
+                var countdownInterval = setInterval(function () {
+                    countdownElement.value = (countdownValue / 10) * 100; // 根据计时器值进行调整
+                    countdownValue--;
+        
+                    if (countdownValue < 0) {
+                        // 时间用尽，自动提交带有 choice='N' 的表单
+                        document.forms['form01'].elements['choice'].value = 'N';
+                        document.forms['form01'].submit();
+                        clearInterval(countdownInterval); // 停止倒计时
+                    }
+                }, 1000); // 每秒更新一次倒计时
+            });
+        </script>
     </main>
 
     <footer>
