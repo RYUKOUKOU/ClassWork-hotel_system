@@ -116,6 +116,7 @@
           const checkInTime = document.getElementById('checkInTime').value;
       
           // ここにチェックイン操作を提出するためのロジックを追加できます。例えば、情報をサーバーに送信するなど
+          socket.emit('roomin', (selectedRoom,customerName,phoneNumber,checkInTime));
       
           // 成功のアラートを表示（例）
           alert(`チェックイン成功！\nお名前: ${customerName}\n電話番号: ${phoneNumber}\nチェックイン時間: ${checkInTime}`);

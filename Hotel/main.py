@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,url_for
 from flask_socketio import SocketIO
 from system import read_info,save_info
+from check_in_out import check_in,check_out
 
 main = Flask(__name__)
 socketio = SocketIO(main)
@@ -54,6 +55,9 @@ def return_message(id):
 def return_message(id):
     a,b,c,d = read_info(id)
     socketio.emit('reroominfo', (a,b,c,d))
+@socketio.on('roomin')
+def return_message(a,b,c,d):
+    check_in(a,b,c,d)
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)
