@@ -7,6 +7,10 @@
     {% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+    <audio id="notificationSound" preload="auto">
+        <source src="{{ url_for('static', filename='notification.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 </head>
 <body>
 
@@ -24,16 +28,18 @@
                 {% block message %}
                 {% endblock %}
               </div>
-            <form name="form01" action = "/" method = "post" class="center-box-button">
-                <table>
-                  <tr>
-                    <td colspan="2">
-                        <button type="submit" name="choice" value="Y">はい</button>
-                        <button type="submit" name="choice" value="N">いいえ</button>
-                    <hr>
-                  </tr>
+              <div class="center-box-progress">
+                <progress id="countdown" value="100" max="100"></progress>
+            </div >
+                <table class="center-box-button">
+                    <tr>
+                        <td colspan="2">
+                            <button id="roomButtonsY" onclick="rehome('Y')">はい</button>
+                            <button id="roomButtonsN" onclick="rehome('N')">いいえ</button>
+                        </td>
+                    </tr>
                 </table>
-            </form>
+            </div>
             {% block main_box %}
             {% endblock %}
         </div>

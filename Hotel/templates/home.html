@@ -11,15 +11,15 @@
     <div class="left-section">
         <h1>部屋番号</h1>
             
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(101)">101</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(102)">102</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(103)">103</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(201)">201</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(202)">202</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(203)">203</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(301)">301</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(302)">302</button>
-                <button class="room-btn" id="roomButton" onclick="showRoomButtons(303)">303</button>
+                <button class="room-btn" id="roomButton-101" onclick="showRoomButtons(101)">101</button>
+                <button class="room-btn" id="roomButton-102" onclick="showRoomButtons(102)">102</button>
+                <button class="room-btn" id="roomButton-103" onclick="showRoomButtons(103)">103</button>
+                <button class="room-btn" id="roomButton-201" onclick="showRoomButtons(201)">201</button>
+                <button class="room-btn" id="roomButton-202" onclick="showRoomButtons(202)">202</button>
+                <button class="room-btn" id="roomButton-203" onclick="showRoomButtons(203)">203</button>
+                <button class="room-btn" id="roomButton-301" onclick="showRoomButtons(301)">301</button>
+                <button class="room-btn" id="roomButton-302" onclick="showRoomButtons(302)">302</button>
+                <button class="room-btn" id="roomButton-303" onclick="showRoomButtons(303)">303</button>
             
 
         <div class="separator">
@@ -28,7 +28,9 @@
                 <h1 class="function-h1"> 機能インターフェース</h1>
                 <div class="room-btns" id="roomButtons">
                     <button onclick="checkIn()">チェックイン</button><br>
+                    <br>
                     <button onclick="checkOut()">チェックアウト</button><br>
+                    <br>
                     <button onclick="cleanRoom()">清掃</button>
                 </div>
                 
@@ -36,24 +38,33 @@
                 
             <div class="function-right">
                 <div class="customer-info" id="customerInfo">
-                    <label for="customerName">お客様のお名前:</label>
-                    <input type="text" id="customerName">
+                    <label for="customerName">お客様のお名前:</label><br>
+                    <input type="text" id="customerName"><br>
                 
-                    <label for="phoneNumber">電話番号:</label>
-                    <input type="tel" id="phoneNumber">
+                    <label for="phoneNumber">電話番号:</label><br>
+                    <input type="tel" id="phoneNumber"><br>
                 
-                    <label for="checkInTime">チェックイン時間:</label>
-                    <input type="datetime-local" id="checkInTime">
+                    <label for="checkInTime">チェックアウト予定時間:</label><br>
+                    <input type="datetime-local" id="checkInTime"><br>
                 
                     <button onclick="submitCheckIn()">提出</button>
                   </div>
+
+            
                 
+
+            </div>
+            <div class="feadback">
+
+              <h1 class="feadback-title"> message </h1>
+                <p class="feadback-message" id="remsg"></p>
 
             </div>
         </div>
         <h1></h1>
     </div>
     <script>
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
         // 現在選択されている部屋番号
         let selectedRoom;
       
@@ -70,7 +81,13 @@
       
           // ボタンを表示
           roomElement.style.display = 'block';
+
+          socket.emit('roominfo', selectedRoom);
         }
+        //显示房间信息
+        socket.on('reroominfo', function (zy , xm , dh ,sj){
+          
+        })
       
         // 部屋の機能ボタンを非表示にする
         function hideRoomButtons() {
@@ -99,6 +116,7 @@
           const checkInTime = document.getElementById('checkInTime').value;
       
           // ここにチェックイン操作を提出するためのロジックを追加できます。例えば、情報をサーバーに送信するなど
+          socket.emit('roomin', (selectedRoom,customerName,phoneNumber,checkInTime));
       
           // 成功のアラートを表示（例）
           alert(`チェックイン成功！\nお名前: ${customerName}\n電話番号: ${phoneNumber}\nチェックイン時間: ${checkInTime}`);
@@ -106,6 +124,10 @@
           // 顧客情報入力画面を非表示にする
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'none';
+
+          // 房间号按钮变成绿色
+          const roomButton = document.getElementById(`roomButton-${selectedRoom}`);
+          roomButton.style.backgroundColor = '#4CAF50'; // 设置按钮背景颜色为绿色
         }
       
         // チェックアウト操作
@@ -123,14 +145,46 @@
             if (confirmation) {
                 // ユーザーが「OK」ボタンをクリックした場合
                 alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
-                var socket = io.connect('http://' + document.domain + ':' + location.port);
-                var message = 'Display updated at ' + new Date().toLocaleTimeString();
+                var message = selectedRoom;
                 socket.emit('update_message', message);
             } else {
                 // ユーザーが「キャンセル」ボタンをクリックした場合
                 alert('清掃リクエストをキャンセルしました');
             }
         }
+
+        function showFeedback(message) {
+          const feedbackMessage = document.querySelector('.feedback-message p');
+          feedbackMessage.textContent = 'チェックインが完了しました。';
+        }
+
+        //接受返回信息
+        socket.on('rehome', function (id) {
+          let matches = id.match(/(\d+)([A-Za-z]+)/);
+          let remsg, roomid;
+          let remsgElement = document.getElementById('remsg');
+          if (matches) {
+              roomid = matches[1];
+              remsg = matches[2];
+          } else {
+              console.log("未找到匹配的数字和字母");
+          }
+          let remsgContent; 
+          let currentTime = new Date();
+          let timestamp = currentTime.toLocaleTimeString();
+          if (remsg == "Y") {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除OK';
+          } else {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除NG';
+          }
+          let newParagraph = document.createElement('p');
+          newParagraph.className = 'feadback-message';
+          newParagraph.textContent = remsgContent;
+          remsgElement.appendChild(newParagraph);
+          remsgElement.appendChild(document.createElement('br'));
+      });
+
+
 
       </script>
 </body>

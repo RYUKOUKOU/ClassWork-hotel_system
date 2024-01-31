@@ -11,6 +11,7 @@ def check_in(fjh,zy,xm,dh,sj):
         else:
             return 'Error2'
 
+<<<<<<< HEAD
 def check_out(fjh):
     room_data = read_info(fjh)
     if room_data[0] == 'False':
@@ -23,3 +24,7 @@ def check_out(fjh):
 # print(check_out(2))
 # check_in(1, True, 'AAA', '09012345678', '2023-12-14 18:17:01.501492')
 # check_out(1, False, 'None', '0', '0')
+=======
+def check_out(fjh,zy,xm,dh,sj):
+    save_info(fjh,zy,xm,dh,sj)
+>>>>>>> 862e9375984f34310d9314439b07352abb111717
