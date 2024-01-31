@@ -11,12 +11,33 @@ def index():
 @main.route('/home.html')
 def home():
     return render_template('home.html')
-@main.route('/room1.html')
-def room1():
-    return render_template('room1.html', message="よこそう")
-@main.route('/room2.html')
-def room2():
-    return render_template('room2.html', message="よこそう")
+@main.route('/room101.html')
+def room101():
+    return render_template('room101.html', message="よこそう")
+@main.route('/room102.html')
+def room102():
+    return render_template('room102.html', message="よこそう")
+@main.route('/room103.html')
+def room103():
+    return render_template('room103.html', message="よこそう")
+@main.route('/room201.html')
+def room201():
+    return render_template('room201.html', message="よこそう")
+@main.route('/room202.html')
+def room202():
+    return render_template('room202.html', message="よこそう")
+@main.route('/room203.html')
+def room203():
+    return render_template('room203.html', message="よこそう")
+@main.route('/room301.html')
+def room301():
+    return render_template('room301.html', message="よこそう")
+@main.route('/room302.html')
+def room302():
+    return render_template('room302.html', message="よこそう")
+@main.route('/room303.html')
+def room303():
+    return render_template('room303.html', message="よこそう")
 
 @main.route('/display')
 def home1():
