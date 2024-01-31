@@ -1,11 +1,22 @@
 .room-btns {
     display: none;
+    
   }
-#roomButton, #checkInButton, #cleanButton, #checkOutButton {
+#roomButton, #checkInButton, #cleanButton, #checkOutButton, [id^="roomButton-"] {
     padding: 10px;
     margin: 10px;
     cursor: pointer;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    
 }
+
 #infoInput {
     display: none;
 }
@@ -48,8 +59,10 @@ body {
     background-color: #e0e0e0;
     padding: 20px;
     margin-top: 10px;
-    
+
 }
+
+
 .customer-info {
     display: none;
 }
@@ -61,12 +74,34 @@ h1 {
     background-color: aqua;
 }
 .function-right{
+    display: flex;
     width: 70%;
     background-color: cornflowerblue;
-    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+.feadback{
+    display: flex;
+    width: 70%;
+    background-color: rgb(92, 182, 149);
+    align-items: center;
+    flex-direction: column;
+    
+
+}
+.feadback-title {
+    font-size: 20px;
+    text-align: center;
+    line-height: 100px;
+    justify-content:first baseline;
+    
+}
+.feadback-message {
+    display: block;
+    margin: 0;
+    text-align: left;
+
 }
 /*.button1{
     text-align: center;
