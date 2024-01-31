@@ -24,7 +24,10 @@ def home1():
 @socketio.on('update_message')
 def handle_message(id):
     roomid = 'room'+str(id)
-    socketio.emit(roomid, 'room1')
+    socketio.emit(roomid, '今掃除してもよろしいでしょうか')
+@socketio.on('return_message')
+def return_message(id):
+    socketio.emit('rehome', id)
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)

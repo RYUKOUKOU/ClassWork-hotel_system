@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>部屋102</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_base.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+    <audio id="notificationSound" preload="auto">
+        <source src="{{ url_for('static', filename='notification.mp3') }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</head>
+<body>
+
+    <header>
+        <h1>部屋102</h1>
+    </header>
+
+    <main>
+        <div class="center-box">
+            <div>
+                <h1>XXXホテル</h1>
+            </div>
+            <div class="center-box-mes">
+                <h2 id="display">{{ message }}</h2>
+            </div>
+            <div class="center-box-progress">
+                <progress id="countdown" value="100" max="100"></progress>
+            </div >
+                <table class="center-box-button">
+                    <tr>
+                        <td colspan="2">
+                            <button id="roomButtonsY" onclick="rehome('Y')">はい</button>
+                            <button id="roomButtonsN" onclick="rehome('N')">いいえ</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <script>
+                var socket = io.connect('http://' + document.domain + ':' + location.port);
+                var notificationSound = document.getElementById('notificationSound');
+                var countdownInterval;
+            
+                socket.on('room102', function (message) {
+                    document.getElementById('display').innerHTML = message;
+            
+                    notificationSound.play();
+            
+                    var countdownValue = 10;
+                    var countdownElement = document.getElementById('countdown');
+                    countdownElement.value = 100;
+            
+                    countdownInterval = setInterval(function () {
+                        countdownElement.value = (countdownValue / 10) * 100;
+                        countdownValue--;
+                        if (countdownValue < 0) {
+                            document.getElementById('roomButtonsN').click();
+                            clearInterval(countdownInterval);
+                        }
+                    }, 1000);
+                });
+            
+                function rehome(msg) {
+                    clearInterval(countdownInterval);
+            
+                    if (msg == "Y") {
+                        var message = "102Y";
+                        document.getElementById('display').innerHTML = "かしこまりました、少々お待ちください。";
+                        socket.emit('return_message', message);
+                    } else {
+                        var message = "102N";
+                        document.getElementById('display').innerHTML = "かしこまりました。";
+                        socket.emit('return_message', message);
+                    }
+                }
+            </script>
+            
+    </main>
+
+    <footer>
+        <p>&copy; 2023 房间</p>
+    </footer>
+
+</body>
+</html>
