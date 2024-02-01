@@ -66,6 +66,13 @@ body {
 .customer-info {
     display: none;
 }
+.customer-info1 {
+
+    border: 2px solid #000; /* 设置边框为2像素宽度，黑色 */
+    padding: 40px; /* 设置内边距 */
+    position: relative; /* 使用相对定位 */
+
+}
 h1 {
     font-size: 20px;
 }
