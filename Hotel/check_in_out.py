@@ -1,4 +1,3 @@
-
 from system import read_info,save_info
 
 def check_in(fjh,zy,xm,dh,sj):
@@ -18,6 +17,7 @@ def check_out(fjh):
     else:
         save_info(fjh,'False','','','')
         return 'Check out'
+
 
 # print(check_in(2, 'True', 'AAA', '09012345678', '2023-12-14 18:17:01.501492'))
 # print(check_out(2))
