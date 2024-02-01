@@ -54,7 +54,8 @@ def return_message(id):
 @socketio.on('roominfo')
 def return_message(id):
     a,b,c,d = read_info(id)
-    socketio.emit('reroominfo', (a,b,c,d))
+    msg = {'checkinstatus':a,'customerName':b,'phoneNumber':c,'checkoutDeadline':d}
+    socketio.emit('reroominfo', msg)
 @socketio.on('roomin')
 def return_message(msg):
     roomid = msg['selectedRoom']

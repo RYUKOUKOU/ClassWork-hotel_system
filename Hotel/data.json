@@ -1,10 +1,10 @@
 [
   {
     "roomid": 101,
-    "state": true,
-    "name": "LHH",
-    "phone": "08097757419",
-    "timestamp": "2024-02-01T11:41"
+    "state": false,
+    "name": "",
+    "phone": "",
+    "timestamp": ""
   },
   {
     "roomid": 102,
