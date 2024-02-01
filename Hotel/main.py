@@ -61,14 +61,10 @@ def return_message(msg):
     name = msg['customerName']
     phone = msg['phoneNumber']
     checkouttime = msg['checkInTime']
-    print(check_in(roomid,name,phone,checkouttime))
+    check_in(roomid,name,phone,checkouttime)
 @socketio.on('roomout')
 def return_message(msg):
-    roomid = msg['selectedRoom']
-    name = msg['customerName']
-    phone = msg['phoneNumber']
-    checkouttime = msg['checkInTime']
-    print(check_in(roomid,name,phone,checkouttime))
+    check_out(msg)
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)

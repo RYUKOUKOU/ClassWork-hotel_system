@@ -133,6 +133,7 @@
         // チェックアウト操作
         function checkOut() {
           // ここにチェックアウト操作のロジックを追加できます
+          socket.emit('roomout', selectedRoom);
           // 成功のアラートを表示（例）
           alert(`チェックアウト成功、部屋番号 ${selectedRoom}`);
         }
