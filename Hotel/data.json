@@ -1,7 +1,7 @@
 [
   {
     "roomid": 101,
-    "state": "True",
+    "state": true,
     "name": "RYU11",
     "phone": "0809775",
     "timestamp": "2023-11-15 18:17:01.501492"
@@ -16,9 +16,9 @@
   {
     "roomid": 103,
     "state": true,
-    "name": "LHH1231",
-    "phone": "12345",
-    "timestamp": "123"
+    "name": "LHH",
+    "phone": "1233123",
+    "timestamp": "2024-02-01T11:30"
   },
   {
     "roomid": 201,

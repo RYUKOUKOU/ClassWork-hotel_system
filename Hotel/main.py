@@ -56,8 +56,19 @@ def return_message(id):
     a,b,c,d = read_info(id)
     socketio.emit('reroominfo', (a,b,c,d))
 @socketio.on('roomin')
-def return_message(a,b,c,d):
-    check_in(a,b,c,d)
+def return_message(msg):
+    roomid = msg['selectedRoom']
+    name = msg['customerName']
+    phone = msg['phoneNumber']
+    checkouttime = msg['checkInTime']
+    print(check_in(roomid,name,phone,checkouttime))
+@socketio.on('roomout')
+def return_message(msg):
+    roomid = msg['selectedRoom']
+    name = msg['customerName']
+    phone = msg['phoneNumber']
+    checkouttime = msg['checkInTime']
+    print(check_in(roomid,name,phone,checkouttime))
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)
