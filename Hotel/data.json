@@ -8,17 +8,17 @@
   },
   {
     "roomid": 102,
-    "state": "False",
-    "name": "",
-    "phone": "",
-    "timestamp": ""
+    "state": true,
+    "name": "LHH1231",
+    "phone": "12345",
+    "timestamp": "123"
   },
   {
     "roomid": 103,
-    "state": "False",
-    "name": "",
-    "phone": "",
-    "timestamp": ""
+    "state": true,
+    "name": "LHH1231",
+    "phone": "12345",
+    "timestamp": "123"
   },
   {
     "roomid": 201,
