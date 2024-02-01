@@ -88,7 +88,17 @@
         socket.on('reroominfo', function (zy , xm , dh ,sj){
           
         })
-      
+        //房间信息隐藏
+      function hideCustmerInfof(){
+        const hideCustmerInfo = document.getElementById('');
+        if (hideCustmerInfo) {
+          hideCustmerInfo.style.display = 'none';}
+      }
+      //显示房间信息
+      function showCustmerInfof(){
+        const showCustmerInfo = document.getElementById('');
+        showCustmerInfo.style.display = 'block';
+      }
         // 部屋の機能ボタンを非表示にする
         function hideRoomButtons() {
           // 前回選択された部屋のボタンを非表示にする
@@ -104,6 +114,7 @@
       
         // 顧客情報入力画面を表示
         function checkIn() {
+          hideCustmerInfof()
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'block';
         }
@@ -124,6 +135,7 @@
           // 顧客情報入力画面を非表示にする
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'none';
+          showCustmerInfof()
 
           // 房间号按钮变成绿色
           const roomButton = document.getElementById(`roomButton-${selectedRoom}`);
