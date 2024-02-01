@@ -81,11 +81,12 @@
       
           // ボタンを表示
           roomElement.style.display = 'block';
+          showCustmerInfof()
 
           socket.emit('roominfo', selectedRoom);
         }
         //显示房间信息
-        socket.on('reroominfo', function (zy , xm , dh ,sj){
+        socket.on('reroominfo', function (msg){
           
         })
         //房间信息隐藏
