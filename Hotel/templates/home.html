@@ -81,6 +81,7 @@
         function showRoomButtons(roomNumber) {
           // 前回選択された部屋のボタンを非表示にする
           hideRoomButtons();
+          hideCustmerInfof()
       
           // 現在選択されている部屋番号を設定
           selectedRoom = roomNumber;
@@ -90,14 +91,25 @@
       
           // ボタンを表示
           roomElement.style.display = 'block';
+          showCustmerInfof()
 
           socket.emit('roominfo', selectedRoom);
         }
         //显示房间信息
-        socket.on('reroominfo', function (zy , xm , dh ,sj){
+        socket.on('reroominfo', function (msg){
           
         })
-      
+        //房间信息隐藏
+      function hideCustmerInfof(){
+        const hideCustmerInfo = document.getElementById('');
+        if (hideCustmerInfo) {
+          hideCustmerInfo.style.display = 'none';}
+      }
+      //显示房间信息
+      function showCustmerInfof(){
+        const showCustmerInfo = document.getElementById('');
+        showCustmerInfo.style.display = 'block';
+      }
         // 部屋の機能ボタンを非表示にする
         function hideRoomButtons() {
           // 前回選択された部屋のボタンを非表示にする
@@ -113,6 +125,7 @@
       
         // 顧客情報入力画面を表示
         function checkIn() {
+          hideCustmerInfof()
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'block';
         }
@@ -125,7 +138,7 @@
           const checkInTime = document.getElementById('checkInTime').value;
       
           // ここにチェックイン操作を提出するためのロジックを追加できます。例えば、情報をサーバーに送信するなど
-          socket.emit('roomin', (selectedRoom,customerName,phoneNumber,checkInTime));
+          socket.emit('roomin', {selectedRoom,customerName,phoneNumber,checkInTime});
       
           // 成功のアラートを表示（例）
           alert(`チェックイン成功！\nお名前: ${customerName}\n電話番号: ${phoneNumber}\nチェックイン時間: ${checkInTime}`);
@@ -133,6 +146,7 @@
           // 顧客情報入力画面を非表示にする
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'none';
+          showCustmerInfof()
 
           // 房间号按钮变成绿色
           const roomButton = document.getElementById(`roomButton-${selectedRoom}`);
@@ -142,6 +156,7 @@
         // チェックアウト操作
         function checkOut() {
           // ここにチェックアウト操作のロジックを追加できます
+          socket.emit('roomout', selectedRoom);
           // 成功のアラートを表示（例）
           alert(`チェックアウト成功、部屋番号 ${selectedRoom}`);
         }

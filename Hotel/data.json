@@ -1,63 +1,63 @@
 [
   {
     "roomid": 101,
-    "state": "True",
-    "name": "RYU11",
-    "phone": "0809775",
-    "timestamp": "2023-11-15 18:17:01.501492"
+    "state": true,
+    "name": "LHH",
+    "phone": "08097757419",
+    "timestamp": "2024-02-01T11:41"
   },
   {
     "roomid": 102,
-    "state": true,
-    "name": "LHH1231",
-    "phone": "12345",
-    "timestamp": "123"
+    "state": false,
+    "name": "",
+    "phone": "",
+    "timestamp": ""
   },
   {
     "roomid": 103,
-    "state": true,
-    "name": "LHH1231",
-    "phone": "12345",
-    "timestamp": "123"
+    "state": false,
+    "name": "",
+    "phone": "",
+    "timestamp": ""
   },
   {
     "roomid": 201,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
   },
   {
     "roomid": 202,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
   },
   {
     "roomid": 203,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
   },
   {
     "roomid": 301,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
   },
   {
     "roomid": 302,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
   },
   {
     "roomid": 303,
-    "state": "False",
+    "state": false,
     "name": "",
     "phone": "",
     "timestamp": ""
