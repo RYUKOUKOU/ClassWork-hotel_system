@@ -1,18 +1,34 @@
-.room-button {
+.room-btns {
+    display: none;
+    
+  }
+#roomButton, #checkInButton, #cleanButton, #checkOutButton, [id^="roomButton-"] {
     padding: 10px;
     margin: 10px;
     cursor: pointer;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+    
+}
+
+#infoInput {
+    display: none;
 }
 body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    display: flex;
 }
 .separator {
     display: flex;
     margin-top: 50px; /* 可以根据需要调整间距 */
-    width: 650px;
+    width: 100%;
     height: 500px;
     border: 2px solid #000; /* 黑色实线边框 */
     margin: 20px; /* 为了更好地展示边框，添加一些外边距 */
@@ -25,6 +41,8 @@ body {
     height: 500px;
     border: 2px solid #000; /* 黑色实线边框 */
     margin: 20px; /* 为了更好地展示边框，添加一些外边距 */
+    flex-wrap: wrap;
+    justify-content: space-between;
 
 }
 
@@ -32,6 +50,7 @@ body {
     flex: 1;
     background-color: #f0f0f0;
     padding: 10px;
+    text-align: center;
 }
 
 .right-section {
@@ -39,6 +58,20 @@ body {
     flex: 1;
     background-color: #e0e0e0;
     padding: 20px;
+    margin-top: 10px;
+
+}
+
+
+.customer-info {
+    display: none;
+}
+.customer-info1 {
+
+    border: 2px solid #000; /* 设置边框为2像素宽度，黑色 */
+    padding: 40px; /* 设置内边距 */
+    position: relative; /* 使用相对定位 */
+
 }
 h1 {
     font-size: 20px;
@@ -48,13 +81,39 @@ h1 {
     background-color: aqua;
 }
 .function-right{
+    display: flex;
     width: 70%;
     background-color: cornflowerblue;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.button1{
+.feadback{
+    display: flex;
+    width: 70%;
+    background-color: rgb(92, 182, 149);
+    align-items: center;
+    flex-direction: column;
+    
+
+}
+.feadback-title {
+    font-size: 20px;
+    text-align: center;
+    line-height: 100px;
+    justify-content:first baseline;
+    
+}
+.feadback-message {
+    display: block;
+    margin: 0;
+    text-align: left;
+
+}
+/*.button1{
     text-align: center;
     line-height:  10px;
-}
+}*/
 .function-h1{
     font-size: 15px;
     text-align: center;
@@ -69,3 +128,16 @@ h1 {
     background-color: blueviolet;
 
 }
+.room {
+    font-size: large;
+    color: black;
+    font-weight: bold;
+    width: 30%; /* 每行显示三个房间，每个房间占30%的宽度 */
+    margin-bottom: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    padding: 10px;
+    background-color:burlywood;
+}
+

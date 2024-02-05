@@ -1,0 +1,54 @@
+{% extends "room_base.html" %}
+
+{% block title %}
+    <title>部屋101</title>
+{% endblock %}
+
+{% block header %}
+    <h1>部屋101</h1>
+{% endblock %}
+
+{% block message %}
+    <h2 id="display">{{message}}</h2>
+{% endblock %}
+
+{% block js %}
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var notificationSound = document.getElementById('notificationSound');
+    var countdownInterval;
+
+    socket.on('room101', function (message) {
+        document.getElementById('display').innerHTML = message;
+
+        notificationSound.play();
+
+        var countdownValue = 10;
+        var countdownElement = document.getElementById('countdown');
+        countdownElement.value = 100;
+
+        countdownInterval = setInterval(function () {
+            countdownElement.value = (countdownValue / 10) * 100;
+            countdownValue--;
+            if (countdownValue < 0) {
+                document.getElementById('roomButtonsN').click();
+                clearInterval(countdownInterval);
+            }
+        }, 1000);
+    });
+
+    function rehome(msg) {
+        clearInterval(countdownInterval);
+
+        if (msg == "Y") {
+            var message = "101Y";
+            document.getElementById('display').innerHTML = "かしこまりました、少々お待ちください。";
+            socket.emit('return_message', message);
+        } else {
+            var message = "101N";
+            document.getElementById('display').innerHTML = "かしこまりました。";
+            socket.emit('return_message', message);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホテル</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+</head>
+<body>
+    <div class="left-section">
+        <h1>部屋番号</h1>
+            
+                <button class="room-btn" id="roomButton-101" onclick="showRoomButtons(101)">101</button>
+                <button class="room-btn" id="roomButton-102" onclick="showRoomButtons(102)">102</button>
+                <button class="room-btn" id="roomButton-103" onclick="showRoomButtons(103)">103</button>
+                <button class="room-btn" id="roomButton-201" onclick="showRoomButtons(201)">201</button>
+                <button class="room-btn" id="roomButton-202" onclick="showRoomButtons(202)">202</button>
+                <button class="room-btn" id="roomButton-203" onclick="showRoomButtons(203)">203</button>
+                <button class="room-btn" id="roomButton-301" onclick="showRoomButtons(301)">301</button>
+                <button class="room-btn" id="roomButton-302" onclick="showRoomButtons(302)">302</button>
+                <button class="room-btn" id="roomButton-303" onclick="showRoomButtons(303)">303</button>
+            
+
+        <div class="separator">
+            
+            <div class="function-left">
+                <h1 class="function-h1"> 機能インターフェース</h1>
+                <div class="room-btns" id="roomButtons">
+                    <button onclick="checkIn()">チェックイン</button><br>
+                    <br>
+                    <button onclick="checkOut()">チェックアウト</button><br>
+                    <br>
+                    <button onclick="cleanRoom()">清掃</button>
+                </div>
+                
+            </div>
+                
+            <div class="function-right">
+                <div class="customer-info" id="customerInfo">
+                    <label for="customerName">お客様のお名前:</label><br>
+                    <input type="text" id="customerName"><br>
+                
+                    <label for="phoneNumber">電話番号:</label><br>
+                    <input type="tel" id="phoneNumber"><br>
+                
+                    <label for="checkInTime">チェックアウト予定時間:</label><br>
+                    <input type="datetime-local" id="checkInTime"><br>
+                
+                    <button onclick="submitCheckIn()">提出</button>
+                  </div>
+                  <div class="customer-info1" id="customerInfo1">
+                    <label for="checkinstatus">入住状态:</label><br>
+                    <br>
+                    <label for="customerName">お客様のお名前:</label><br>
+                    <br>
+                    <label for="phoneNumber">電話番号:</label><br>
+                    <br>
+                    <label for="checkoutDeadline">チェックアウト期限</label><br>
+                  </div>
+
+            
+                
+
+            </div>
+            <div class="feadback">
+
+              <h1 class="feadback-title"> message </h1>
+                <p class="feadback-message" id="remsg"></p>
+
+            </div>
+        </div>
+        <h1></h1>
+    </div>
+    <script>
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      var roomlist = [101, 102, 103, 201, 202, 203,301,302,303];
+        // 現在選択されている部屋番号
+        let selectedRoom;
+        var initialInfo = {
+      checkinstatus: "入住状态:",
+      customerName: "お客様のお名前:",
+      phoneNumber: "電話番号:",
+      checkoutDeadline: "チェックアウト期限:"
+    };
+    hideCustmerInfof()
+    Initialization()
+
+        function Initialization(){
+          socket.emit('Initialization', true);
+        }
+        socket.on('Initializationre', function (msg){
+          for (var i = 0; i < msg.length; i++) {
+            if (msg[i] === true) {
+              colorchange(roomlist[i],"g")
+            }}
+        })
+      
+        // 部屋の機能ボタンを表示
+        function showRoomButtons(roomNumber) {
+          // 前回選択された部屋のボタンを非表示にする
+          hideRoomButtons();
+          hideCustmerInfof();
+      
+          // 現在選択されている部屋番号を設定
+          selectedRoom = roomNumber;
+      
+          // ボタンを表示する部屋の要素を取得
+          const roomElement = document.getElementById('roomButtons');
+      
+          // ボタンを表示
+          roomElement.style.display = 'block';
+          showCustmerInfof()
+          
+        }
+        //更新房间信息
+        socket.on('reroominfo', function (msg){
+          console.log('Element cloned:', msg)
+          updateCustomerInfo(msg);
+        })
+        function updateCustomerInfo(data) {
+      // 获取包含信息的 div 元素
+      var customerInfoDiv = document.getElementById('customerInfo1');
+
+      // 遍历数据对象的属性，并更新相应的标签内容
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          // 查找带有相应 "for" 属性的 label 元素
+          var labelElement = customerInfoDiv.querySelector('[for="' + key + '"]');
+
+          // 如果找到标签，则更新其后的文本内容
+          if (labelElement) {
+            labelElement.innerHTML += ' ' + data[key];
+          }
+        }
+      }
+    }
+        //房间信息隐藏
+      function hideCustmerInfof(){
+        const hideCustmerInfo = document.getElementById('customerInfo1');
+        hideCustmerInfo.style.display = 'none';
+        var labels = hideCustmerInfo.querySelectorAll('label[for]');
+        labels.forEach(function(label, index) {
+        label.innerHTML = ' ' + initialInfo[Object.keys(initialInfo)[index]];
+      });
+      }
+      //显示房间信息
+      function showCustmerInfof(){
+        const showCustmerInfo = document.getElementById('customerInfo1');
+        showCustmerInfo.style.display = 'block';
+        socket.emit('roominfo', selectedRoom);
+      }
+        // 部屋の機能ボタンを非表示にする
+        function hideRoomButtons() {
+          // 前回選択された部屋のボタンを非表示にする
+          const lastSelectedRoom = document.getElementById('roomButtons');
+          if (lastSelectedRoom) {
+            lastSelectedRoom.style.display = 'none';
+          }
+      
+          // 顧客情報入力画面を非表示にする
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'none';
+        }
+      
+        // 顧客情報入力画面を表示
+        function checkIn() {
+          hideCustmerInfof()
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'block';
+        }
+      
+        // チェックイン操作を提出
+        function submitCheckIn() {
+          // 顧客情報を取得
+          const customerName = document.getElementById('customerName').value;
+          const phoneNumber = document.getElementById('phoneNumber').value;
+          const checkInTime = document.getElementById('checkInTime').value;
+      
+          // ここにチェックイン操作を提出するためのロジックを追加できます。例えば、情報をサーバーに送信するなど
+          socket.emit('roomin', {selectedRoom,customerName,phoneNumber,checkInTime});
+      
+          // 成功のアラートを表示（例）
+          alert(`チェックイン成功！\nお名前: ${customerName}\n電話番号: ${phoneNumber}\nチェックイン時間: ${checkInTime}`);
+      
+          // 顧客情報入力画面を非表示にする
+          const customerInfo = document.getElementById('customerInfo');
+          customerInfo.style.display = 'none';
+          showCustmerInfof()
+          colorchange(selectedRoom,"g")
+
+        }
+      
+        // チェックアウト操作
+        function checkOut() {
+          // ここにチェックアウト操作のロジックを追加できます
+          socket.emit('roomout', selectedRoom);
+          // 成功のアラートを表示（例）
+          alert(`チェックアウト成功、部屋番号 ${selectedRoom}`);
+          hideCustmerInfof()
+          showCustmerInfof()
+          colorchange(selectedRoom,"w")
+        }
+      
+        // 清掃操作
+        function cleanRoom() {
+            // confirm関数を使用して確認ダイアログを表示
+            const confirmation = confirm(`清掃リクエストを送信しますか？ 部屋番号 ${selectedRoom}?`);
+
+            if (confirmation) {
+                // ユーザーが「OK」ボタンをクリックした場合
+                alert(`清掃リクエストを送信しました、部屋番号 ${selectedRoom}`);
+                var message = selectedRoom;
+                socket.emit('update_message', message);
+            } else {
+                // ユーザーが「キャンセル」ボタンをクリックした場合
+                alert('清掃リクエストをキャンセルしました');
+            }
+        }
+
+        function showFeedback(message) {
+          const feedbackMessage = document.querySelector('.feedback-message p');
+          feedbackMessage.textContent = 'チェックインが完了しました。';
+        }
+
+        //接受返回信息
+        socket.on('rehome', function (id) {
+          let matches = id.match(/(\d+)([A-Za-z]+)/);
+          let remsg, roomid;
+          let remsgElement = document.getElementById('remsg');
+          if (matches) {
+              roomid = matches[1];
+              remsg = matches[2];
+          } else {
+              console.log("未找到匹配的数字和字母");
+          }
+          let remsgContent; 
+          let currentTime = new Date();
+          let timestamp = currentTime.toLocaleTimeString();
+          if (remsg == "Y") {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除OK';
+              colorchange(roomid,"y")
+          } else {
+              remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除NG';
+          }
+          let newParagraph = document.createElement('p');
+          newParagraph.className = 'feadback-message';
+          newParagraph.textContent = remsgContent;
+          remsgElement.appendChild(newParagraph);
+          remsgElement.appendChild(document.createElement('br'));
+      });
+
+        function colorchange(id,color){
+          // 房间号按钮变成绿色
+          const roomButton = document.getElementById(`roomButton-${id}`);
+          if (color == "w"){colorset = "#f0f0f0"}
+          if (color == "g"){colorset = "#4CAF50"}
+          if (color == "y"){colorset = "#FFFF00"}
+          roomButton.style.backgroundColor = colorset; 
+        }
+
+      </script>
+</body>
+</html>
