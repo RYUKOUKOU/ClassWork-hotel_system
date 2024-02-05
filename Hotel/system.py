@@ -1,17 +1,17 @@
 import json
 import os
-print("当前工作目录:", os.getcwd())
+#print("当前工作目录:", os.getcwd())
 
 def save_data(data):
-    with open('data.json', 'w') as file:
+    with open('./Hotel/data.json', 'w') as file:
         json.dump(data, file, indent=2)
 def load_data():
     try:
-        with open('data.json', 'r') as file:
+        with open('./Hotel/data.json', 'r') as file:
             data = json.load(file)
         return data
     except FileNotFoundError:
-        print("文件 'data.json' 未找到。请确保文件存在并且路径正确。")
+        print("文件 './Hotel/data.json' 未找到。请确保文件存在并且路径正确。")
         return None
     except Exception as e:
         print(f"加载数据时发生错误: {e}")
@@ -60,5 +60,17 @@ def read_info(fjh):
         print('未找到数据。')
     return False
 
+#初期化
+def Initialization():
+    data = load_data()
+    roomstate=[]
+    if data:
+        for room in data:
+            roomstate.append(room.get('state'))
+    else:
+        print('未找到数据。')
+    return roomstate
+
 #print(save_info(103,True,'LHH1231','12345','123'))
 #print(read_info(103))
+#Initialization()

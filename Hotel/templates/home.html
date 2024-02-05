@@ -74,6 +74,7 @@
     </div>
     <script>
       var socket = io.connect('http://' + document.domain + ':' + location.port);
+      var roomlist = [101, 102, 103, 201, 202, 203,301,302,303];
         // 現在選択されている部屋番号
         let selectedRoom;
         var initialInfo = {
@@ -83,6 +84,17 @@
       checkoutDeadline: "チェックアウト期限:"
     };
     hideCustmerInfof()
+    Initialization()
+
+        function Initialization(){
+          socket.emit('Initialization', true);
+        }
+        socket.on('Initializationre', function (msg){
+          for (var i = 0; i < msg.length; i++) {
+            if (msg[i] === true) {
+              colorchange(roomlist[i],"g")
+            }}
+        })
       
         // 部屋の機能ボタンを表示
         function showRoomButtons(roomNumber) {
@@ -175,10 +187,8 @@
           const customerInfo = document.getElementById('customerInfo');
           customerInfo.style.display = 'none';
           showCustmerInfof()
+          colorchange(selectedRoom,"g")
 
-          // 房间号按钮变成绿色
-          const roomButton = document.getElementById(`roomButton-${selectedRoom}`);
-          roomButton.style.backgroundColor = '#4CAF50'; // 设置按钮背景颜色为绿色
         }
       
         // チェックアウト操作
@@ -189,6 +199,7 @@
           alert(`チェックアウト成功、部屋番号 ${selectedRoom}`);
           hideCustmerInfof()
           showCustmerInfof()
+          colorchange(selectedRoom,"w")
         }
       
         // 清掃操作
@@ -228,6 +239,7 @@
           let timestamp = currentTime.toLocaleTimeString();
           if (remsg == "Y") {
               remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除OK';
+              colorchange(roomid,"y")
           } else {
               remsgContent = timestamp + ' - ' + roomid + '室の客様は掃除NG';
           }
@@ -238,7 +250,14 @@
           remsgElement.appendChild(document.createElement('br'));
       });
 
-
+        function colorchange(id,color){
+          // 房间号按钮变成绿色
+          const roomButton = document.getElementById(`roomButton-${id}`);
+          if (color == "w"){colorset = "#f0f0f0"}
+          if (color == "g"){colorset = "#4CAF50"}
+          if (color == "y"){colorset = "#FFFF00"}
+          roomButton.style.backgroundColor = colorset; 
+        }
 
       </script>
 </body>

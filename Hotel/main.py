@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,url_for
 from flask_socketio import SocketIO
-from system import read_info,save_info
+from system import read_info,save_info,Initialization
 from check_in_out import check_in,check_out
 
 main = Flask(__name__)
@@ -66,6 +66,10 @@ def return_message(msg):
 @socketio.on('roomout')
 def return_message(msg):
     check_out(msg)
+@socketio.on('Initialization')
+def return_message(msg):
+    socketio.emit('Initializationre', Initialization())
+
     
 if __name__ == '__main__':
     main.run(host='0.0.0.0', port=8000)
