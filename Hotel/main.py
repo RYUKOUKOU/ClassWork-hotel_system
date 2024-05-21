@@ -14,31 +14,31 @@ def home():
     return render_template('home.html')
 @main.route('/room101.html')
 def room101():
-    return render_template('room101.html', message="よこそう")
+    return render_template('room101.html', message="hello")
 @main.route('/room102.html')
 def room102():
-    return render_template('room102.html', message="よこそう")
+    return render_template('room102.html', message="hello")
 @main.route('/room103.html')
 def room103():
-    return render_template('room103.html', message="よこそう")
+    return render_template('room103.html', message="hello")
 @main.route('/room201.html')
 def room201():
-    return render_template('room201.html', message="よこそう")
+    return render_template('room201.html', message="hello")
 @main.route('/room202.html')
 def room202():
-    return render_template('room202.html', message="よこそう")
+    return render_template('room202.html', message="hello")
 @main.route('/room203.html')
 def room203():
-    return render_template('room203.html', message="よこそう")
+    return render_template('room203.html', message="hello")
 @main.route('/room301.html')
 def room301():
-    return render_template('room301.html', message="よこそう")
+    return render_template('room301.html', message="hello")
 @main.route('/room302.html')
 def room302():
-    return render_template('room302.html', message="よこそう")
+    return render_template('room302.html', message="hello")
 @main.route('/room303.html')
 def room303():
-    return render_template('room303.html', message="よこそう")
+    return render_template('room303.html', message="hello")
 
 @main.route('/display')
 def home1():
