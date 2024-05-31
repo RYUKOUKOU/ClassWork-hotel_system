@@ -5,7 +5,7 @@ import os
 H,W=5,7
 com_boat=(2,2,2,3,3)
 bullet=10
-cheat_mode=True
+cheat_mode=False
 #初期化
 def initialize(H,W):
     space_csee = np.zeros((H, W))
@@ -48,8 +48,8 @@ def attack(x, y, space_csee, space_attacked):
 
 def cheat(space_csee):
     global cheat_mode
-    print(space_csee)
-    print(space_csee[0,2])
+    if cheat_mode:
+        print(space_csee)
 
     
 def refresh_screen(space1, space2): # 中断点，准备打印画面
