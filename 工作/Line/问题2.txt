@@ -1,0 +1,62 @@
+import sys
+
+def is_valid(x, y, visited, m, n):
+    return 0 <= x < m and 0 <= y < n and not visited[x][y]
+
+def dfs(x, y, visited, m, n, count):
+
+    if count == m * n:
+        return 1
+    
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    total_paths = 0
+    visited[x][y] = True
+    
+    for dx, dy in directions:
+        nx, ny = x + dx, y + dy
+        if is_valid(nx, ny, visited, m, n):
+            total_paths += dfs(nx, ny, visited, m, n, count + 1)
+    
+    visited[x][y] = False
+    return total_paths
+
+def count_paths(m, n):
+    visited = [[False for _ in range(n)] for _ in range(m)]
+    return dfs(0, 0, visited, m, n, 1)
+
+
+def main(lines):
+    # このコードは標準入力と標準出力を用いたサンプルコードです。
+    # このコードは好きなように編集・削除してもらって構いません。
+    # ---
+    # This is a sample code to use stdin and stdout.
+    # Edit and remove this code as you like.
+
+    m,n=map(int,lines[0].split())
+    print(count_paths(m,n))
+
+if __name__ == '__main__':
+    lines = []
+    for l in sys.stdin:
+        lines.append(l.rstrip('\r\n'))
+    main(lines)
+
+
+### is_valid関数:
+この関数は次の点がグリッド内にあり、まだ訪問されていないかをチェックします。
+引数 x, y は次の点の座標、visited は訪問済みの点を示す2次元リスト、m はグリッドの行数、n はグリッドの列数です。
+0 <= x < m と 0 <= y < n は点がグリッド内にあることを確認し、not visited[x][y] はその点がまだ訪問されていないことを確認します。
+
+### dfs関数:
+深さ優先探索（DFS）を使ってすべての可能なパスを探索します。
+引数 x, y は現在の点の座標、visited は訪問済みの点を示す2次元リスト、count は現在までに訪問した点の数です。
+count == m * n の場合、すべての点を訪問したことになり、1を返してパスをカウントします。
+directions は上下左右の4方向を示すタプルのリストです。
+total_paths は有効なパスの総数をカウントします。
+現在の点を訪問済みに設定し（visited[x][y] = True）、次のすべての方向について再帰的にDFSを実行します。
+次の点が有効（is_valid(nx, ny, visited, m, n)）であれば、その点に移動してDFSを続けます。
+すべての方向について探索が終わったら、現在の点の訪問を取り消します（バックトラック: visited[x][y] = False）。
+
+### count_paths関数:
+visited という m x n の2次元リストを初期化し、すべての要素を False に設定します。
+左上角 (0, 0) からDFSを開始し、すべての有効なパスの数を返します。
