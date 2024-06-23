@@ -5,7 +5,7 @@ import os
 H,W=5,7
 com_boat=(2,2,2,3,3)
 bullet=10
-cheat_mode=False
+cheat_mode=True
 #初期化
 def initialize(H,W):
     space_csee = np.zeros((H, W))
@@ -52,7 +52,7 @@ def cheat(space_csee):
         print(space_csee)
 
     
-def refresh_screen(space1, space2): # 中断点，准备打印画面
+def refresh_screen(space1, space2): 
     os.system('cls' if os.name == 'nt' else 'clear')
     cheat(space1)
     H, W = space2.shape
