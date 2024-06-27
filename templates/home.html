@@ -223,7 +223,7 @@
           feedbackMessage.textContent = 'チェックインが完了しました。';
         }
 
-        //接受返回信息
+        //データ受け取り
         socket.on('rehome', function (id) {
           let matches = id.match(/(\d+)([A-Za-z]+)/);
           let remsg, roomid;
@@ -251,7 +251,7 @@
       });
 
         function colorchange(id,color){
-          // 房间号按钮变成绿色
+          // ルームボタンの色
           const roomButton = document.getElementById(`roomButton-${id}`);
           if (color == "w"){colorset = "#f0f0f0"}
           if (color == "g"){colorset = "#4CAF50"}
