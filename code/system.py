@@ -1,13 +1,16 @@
 import json
 import os
+from pathlib import Path
 #print("当前工作目录:", os.getcwd())
 
 def save_data(data):
-    with open('./Hotel/data.json', 'w') as file:
+    DATA_PATH = (Path(__file__).resolve().parent /'data.json')
+    with DATA_PATH.open('w', encoding='utf-8') as file:
         json.dump(data, file, indent=2)
 def load_data():
     try:
-        with open('./Hotel/data.json', 'r') as file:
+        DATA_PATH = (Path(__file__).resolve().parent /'data.json')
+        with DATA_PATH.open('r') as file:
             data = json.load(file)
         return data
     except FileNotFoundError:
@@ -72,5 +75,5 @@ def Initialization():
     return roomstate
 
 #print(save_info(103,True,'LHH1231','12345','123'))
-#print(read_info(103))
+#print(read_info(101))
 #Initialization()
